@@ -241,19 +241,19 @@ return {
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'astro-language-server',
+        'astro',
         'biome',
-        'css-lsp',
+        'cssls',
         'debugpy',
         'delve',
-        'docker-compose-language-service',
-        'dockerfile-language-server',
-        'eslint-lsp',
+        'docker_compose_language_service',
+        'dockerls',
+        'eslint',
         'hadolint',
         'intelephense',
         'js-debug-adapter',
-        'lua-language-server',
-        'neocmakelsp',
+        'lua_ls',
+        'neocmake',
         'php-cs-fixer',
         'php-debug-adapter',
         'phpcs',
@@ -262,15 +262,18 @@ return {
         'pyright',
         'ruff',
         'stylua',
-        'tailwindcss-language-server',
-        'vtsls',
+        'tailwindcss',
         'kube-linter',
+        'gitlab_ci_ls',
+        'yamlls',
       })
       require('mason-tool-installer').setup {
         ensure_installed = ensure_installed,
       }
 
       require('mason-lspconfig').setup {
+        ensure_installed = ensure_installed,
+        automatic_enable = true,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
