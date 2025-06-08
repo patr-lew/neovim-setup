@@ -23,6 +23,18 @@ return {
   -- The `opts` table is where all configuration goes.
   -- lazy.nvim passes this table to the plugin's `setup()` function.
   opts = {
+
+    trigger_characters = {
+      '.',
+      '"',
+      "'",
+      '`',
+      '/',
+      '@',
+      '<',
+      '#',
+      ' ',
+    },
     -- The `on_attach` function runs whenever the LSP server attaches to a buffer.
     -- This is the ideal place to set up buffer-local keymaps for LSP functionality.
     on_attach = function(client, bufnr)

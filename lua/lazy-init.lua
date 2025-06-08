@@ -12,6 +12,7 @@ require('lazy').setup({
     'tpope/vim-sleuth',
     { import = 'plugins.coding.ai' },
     { import = 'plugins.coding.autopairs' },
+    { import = 'plugins.coding.autotag' },
     { import = 'plugins.coding.cmp' },
     { import = 'plugins.coding.lspconfig' },
     { import = 'plugins.coding.none' },
