@@ -1,89 +1,46 @@
+-- lua/plugins/colorscheme.lua
+
 return {
-  -- {
-  --   'catppuccin/nvim',
-  --   name = 'catppuccin',
-  --   priority = 1000,
-  --   config = function()
-  --     require('catppuccin').setup {
-  --       transparent_background = true,
-  --       integrations = {
-  --         aerial = true,
-  --         alpha = true,
-  --         cmp = true,
-  --         dashboard = true,
-  --         flash = true,
-  --         fzf = true,
-  --         grug_far = true,
-  --         gitsigns = true,
-  --         headlines = true,
-  --         illuminate = true,
-  --         indent_blankline = { enabled = true },
-  --         leap = true,
-  --         lsp_trouble = true,
-  --         mason = true,
-  --         markdown = true,
-  --         mini = true,
-  --         native_lsp = {
-  --           enabled = true,
-  --           underlines = {
-  --             errors = { 'undercurl' },
-  --             hints = { 'undercurl' },
-  --             warnings = { 'undercurl' },
-  --             information = { 'undercurl' },
-  --           },
-  --         },
-  --         navic = { enabled = true, custom_bg = 'lualine' },
-  --         neotest = true,
-  --         neotree = true,
-  --         noice = true,
-  --         notify = true,
-  --         semantic_tokens = true,
-  --         snacks = true,
-  --         telescope = true,
-  --         treesitter = true,
-  --         treesitter_context = true,
-  --         which_key = true,
-  --       },
-  --     }
-  --     vim.cmd [[colorscheme catppuccin]]
-  --   end,
-  -- },
+  -- The plugin that listens for the system's theme change
+  {
+    'cormacrelf/dark-notify',
+    config = function()
+      -- The `onchange` function is called whenever the system theme changes.
+      -- `mode` will be either "dark" or "light".
+      require('dark_notify').run {
+        onchange = function(mode)
+          -- This is the key: we simply set Neovim's background option.
+          -- Colorschemes like Cyberdream, Catppuccin, Tokyonight, etc.,
+          -- will automatically detect this change and switch their variant.
+          vim.o.background = mode
+        end,
+      }
+    end,
+  },
+
+  -- Your colorscheme plugin
   {
     'scottmckendry/cyberdream.nvim',
     lazy = false,
     priority = 1000,
     config = function()
       require('cyberdream').setup {
+        -- 'auto' will now correctly follow vim.o.background
         variant = 'auto',
         transparent = true,
         italic_comments = true,
         borderless_telescope = false,
       }
-      vim.cmd [[colorscheme cyberdream]]
-      -- Add a custom keybinding to toggle the colorscheme
-      vim.api.nvim_set_keymap(
+      -- Load the colorscheme
+      vim.cmd.colorscheme 'cyberdream'
+
+      -- The keybinding to toggle manually is still useful for testing
+      vim.keymap.set(
         'n',
         '<leader>tc',
         ':CyberdreamToggleMode<CR>',
-        { noremap = true, silent = true }
+        { noremap = true, silent = true, desc = 'Toggle Colorscheme' }
       )
     end,
   },
-  -- {
-  --   'cormacrelf/dark-notify',
-  --   config = function()
-  --     require('dark_notify').run {
-  --       onchange = function(mode)
-  --         print('Switched to ' .. mode .. ' mode!')
-  --         local util = require 'cyberdream.util'
-  --         local new_variant = util.toggle_theme_variant()
-  --         util.toggle_lualine_theme()
-  --         vim.api.nvim_exec_autocmds(
-  --           'User',
-  --           { pattern = 'CyberdreamToggleMode', data = new_variant }
-  --         )
-  --       end,
-  --     }
-  --   end,
-  -- },
 }
