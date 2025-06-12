@@ -1,49 +1,22 @@
 return {
   'nvimtools/none-ls.nvim',
-  -- Just by listing this as a dependency, its sources become available.
-  dependencies = { 'nvimtools/none-ls-extras.nvim' },
+  config = function()
+    local null_ls = require 'null-ls'
 
-  opts = function()
-    -- We only need to require the main module, which is still 'null-ls'.
-    local nls = require 'null-ls'
-
-    -- There is NO need to require 'none-ls.extras.*'.
-    -- The sources from the extras plugin are merged into the 'nls' object.
-
-    return {
+    null_ls.setup {
+      -- You can add sources for any tool that none-ls supports
       sources = {
         -- Linters
-        nls.builtins.diagnostics.kube_linter,
-        nls.builtins.diagnostics.hadolint,
-        nls.builtins.diagnostics.ruff,
-
-        -- ESLint is now accessed directly through `nls.builtins`, just like the others.
-        nls.builtins.diagnostics.eslint_d.with {
-          fallback_config = {
-            parserOptions = {
-              ecmaVersion = 'latest',
-              sourceType = 'module',
-              ecmaFeatures = { jsx = true },
-            },
-            env = {
-              ['react-native/react-native'] = true,
-              ['node'] = true,
-              ['es2021'] = true,
-            },
-            plugins = { 'react-native' },
-            rules = {
-              ['no-undef'] = 'warn',
-              ['no-unused-vars'] = 'warn',
-            },
-          },
-        },
+        null_ls.builtins.diagnostics.kube_linter,
+        null_ls.builtins.diagnostics.hadolint,
+        null_ls.builtins.diagnostics.ruff,
 
         -- Formatters
-        -- prettierd also comes from the extras plugin and is accessed directly.
-        nls.builtins.formatting.prettierd,
-        nls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.stylua,
       },
 
+      -- This function will format the buffer on save.
+      -- You can disable this if you prefer to format manually.
       on_attach = function(client, bufnr)
         if client.supports_method 'textDocument/formatting' then
           vim.api.nvim_clear_autocmds { group = 'LspFormat', buffer = bufnr }
@@ -57,15 +30,13 @@ return {
         end
       end,
     }
-  end,
 
-  config = function(_, opts)
-    -- This keymap setup is perfect and runs after the plugin is configured.
+    -- Optional: a keymap to trigger formatting manually
     vim.keymap.set(
       'n',
       '<leader>cf',
       vim.lsp.buf.format,
-      { desc = '[C]ode [F]ormat file' }
+      { desc = 'Format file' }
     )
   end,
 }
