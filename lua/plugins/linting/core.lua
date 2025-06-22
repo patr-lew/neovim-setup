@@ -13,18 +13,19 @@ return {
       --
       -- However, note that this will enable a set of default linters,
       -- which will cause errors unless these tools are available:
-      -- {
-      --   clojure = { "clj-kondo" },
-      --   dockerfile = { "hadolint" },
-      --   inko = { "inko" },
-      --   janet = { "janet" },
-      --   json = { "jsonlint" },
-      --   markdown = { "vale" },
-      --   rst = { "vale" },
-      --   ruby = { "ruby" },
-      --   terraform = { "tflint" },
-      --   text = { "vale" }
-      -- }
+      lint.linters_by_ft = {
+        --   clojure = { "clj-kondo" },
+        dockerfile = { 'hadolint' },
+        yaml = { 'kube_linter' },
+        --   inko = { "inko" },
+        --   janet = { "janet" },
+        --   json = { "jsonlint" },
+        markdown = { 'vale' },
+        --   rst = { "vale" },
+        --   ruby = { "ruby" },
+        --   terraform = { "tflint" },
+        text = { 'vale' },
+      }
       --
       -- You can disable the default linters by setting their filetypes to nil:
       -- lint.linters_by_ft['clojure'] = nil
