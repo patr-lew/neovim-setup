@@ -13,6 +13,11 @@ return {
     },
     keys = {
       { '<leader>e', '<cmd>NvimTreeToggle<cr>', desc = 'Open Explorer' },
+      {
+        '<leader>fe',
+        '<cmd>NvimTreeFindFile<cr>',
+        desc = 'NvimTree: Focus current file',
+      },
     },
     opts = {
       reload_on_bufenter = true,
