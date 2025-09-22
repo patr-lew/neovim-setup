@@ -69,7 +69,7 @@ function model_info_provider:boot(app)
     }
   end
 
-  app:instance('model_info_view', model_info_view)
+  app:bind('model_info_view', model_info_view)
 end
 
 return model_info_provider

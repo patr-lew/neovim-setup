@@ -34,7 +34,7 @@ function route_info_provider:boot(app)
     }
   end
 
-  app:instance('route_info_view', route_info_view)
+  app:bind('route_info_view', route_info_view)
 end
 
 return route_info_provider

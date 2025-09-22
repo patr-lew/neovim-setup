@@ -1,13 +1,27 @@
 return {
-  {
-    'stevearc/dressing.nvim',
-    opts = {},
-  },
+  { 'rcarriga/nvim-notify', opts = {
+    top_down = false,
+  } },
   {
     'folke/noice.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
       -- add any options here
+      views = {
+        notify = {
+          position = 'bottom-right',
+          timeout = 3000,
+        },
+      },
+    },
+    keys = {
+      {
+        '<leader>sn',
+        function()
+          require('telescope').extensions.notify.notify()
+        end,
+        desc = 'Go through notifications',
+      },
     },
     dependencies = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
