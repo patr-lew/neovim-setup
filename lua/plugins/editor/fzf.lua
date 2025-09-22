@@ -93,6 +93,10 @@ return {
       { '<leader><space>', '<cmd>FzfLua files<cr>', desc = 'Find Files' },
       { '<leader>fg', '<cmd>FzfLua git_files<cr>', desc = 'Git-files' },
 
+      -- save (and format first since it's attached as pre-save hook via conform)
+      -- hence: [f]ormat and [s]ave
+      { '<leader>fs', '<cmd>w<cr>', desc = 'Format and Save' },
+
       -- search
       { '<leader>s"', '<cmd>FzfLua registers<cr>', desc = 'Registers' },
       { '<leader>sa', '<cmd>FzfLua autocmds<cr>', desc = 'Auto Commands' },

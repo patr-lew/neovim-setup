@@ -168,6 +168,7 @@ return {
         tailwindcss = {},
         gitlab_ci_ls = {},
         yamlls = {},
+        angularls = {},
       }
 
       -- Other tools (not LSPs) to be installed by Mason.

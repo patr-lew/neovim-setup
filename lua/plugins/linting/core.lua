@@ -16,7 +16,7 @@ return {
       lint.linters_by_ft = {
         --   clojure = { "clj-kondo" },
         dockerfile = { 'hadolint' },
-        yaml = { 'kube_linter' },
+        -- yaml = { 'kube_linter' },
         --   inko = { "inko" },
         --   janet = { "janet" },
         --   json = { "jsonlint" },

@@ -34,6 +34,7 @@ return {
         'vimdoc',
         'ninja',
         'rst',
+        'angular',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
