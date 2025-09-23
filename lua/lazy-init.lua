@@ -10,7 +10,7 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 require('lazy').setup({
   spec = {
     'tpope/vim-sleuth',
-    { import = 'plugins.coding.ai' },
+    -- TODO: currently unused   { import = 'plugins.coding.ai' },
     { import = 'plugins.coding.autopairs' },
     { import = 'plugins.coding.autotag' },
     { import = 'plugins.coding.cmp' },
@@ -34,9 +34,10 @@ require('lazy').setup({
     { import = 'plugins.languages.astro' },
     { import = 'plugins.languages.docker' },
     { import = 'plugins.languages.go' },
-    { import = 'plugins.languages.laravel' },
+    { import = 'plugins.languages.java' },
+    -- TODO: unused and brings problems    { import = 'plugins.languages.laravel' },
+    --     { import = 'plugins.languages.php' },
     { import = 'plugins.languages.mdx' },
-    { import = 'plugins.languages.php' },
     { import = 'plugins.languages.python' },
     { import = 'plugins.languages.tailwind' },
     { import = 'plugins.languages.typescript' },
