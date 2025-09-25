@@ -129,10 +129,10 @@ return {
         end)
       end
 
-      vim.api.nvim_create_autocmd('BufEnter', {
-        group = vim.api.nvim_create_augroup('nvim-tree', { clear = true }),
-        callback = open_tree_on_setup,
-      })
+      -- vim.api.nvim_create_autocmd('BufEnter', {
+      -- group = vim.api.nvim_create_augroup('nvim-tree', { clear = true }),
+      -- callback = open_tree_on_setup,
+      -- })
     end,
   },
   {

@@ -13,6 +13,11 @@ return {
           -- Colorschemes like Cyberdream, Catppuccin, Tokyonight, etc.,
           -- will automatically detect this change and switch their variant.
           vim.o.background = mode
+          if mode == 'light' then
+            vim.cmd [[colorscheme tokyonight-day]]
+          else
+            vim.cmd [[colorscheme tokyonight-storm]]
+          end
         end,
       }
     end,
@@ -20,27 +25,43 @@ return {
 
   -- Your colorscheme plugin
   {
-    'scottmckendry/cyberdream.nvim',
-    lazy = false,
+    'folke/tokyonight.nvim',
     priority = 1000,
     config = function()
-      require('cyberdream').setup {
-        -- 'auto' will now correctly follow vim.o.background
-        variant = 'auto',
-        transparent = true,
-        italic_comments = true,
-        borderless_telescope = false,
-      }
-      -- Load the colorscheme
-      vim.cmd.colorscheme 'cyberdream'
-
-      -- The keybinding to toggle manually is still useful for testing
-      vim.keymap.set(
-        'n',
-        '<leader>tc',
-        ':CyberdreamToggleMode<CR>',
-        { noremap = true, silent = true, desc = 'Toggle Colorscheme' }
-      )
+      -- load the colorscheme
+      if vim.o.background == 'light' then
+        vim.cmd [[colorscheme tokyonight-day]]
+      else
+        vim.cmd [[colorscheme tokyonight-storm]]
+      end
     end,
+    setup = {
+      light_style = 'day',
+      transparent = true,
+    },
   },
+  -- {
+  --   'scottmckendry/cyberdream.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require('cyberdream').setup {
+  --       -- 'auto' will now correctly follow vim.o.background
+  --       variant = 'auto',
+  --       transparent = true,
+  --       italic_comments = true,
+  --       borderless_telescope = false,
+  --     }
+  --     -- Load the colorscheme
+  --     vim.cmd.colorscheme 'cyberdream'
+  --
+  --     -- The keybinding to toggle manually is still useful for testing
+  --     vim.keymap.set(
+  --       'n',
+  --       '<leader>tc',
+  --       ':CyberdreamToggleMode<CR>',
+  --       { noremap = true, silent = true, desc = 'Toggle Colorscheme' }
+  --     )
+  --   end,
+  -- },
 }
