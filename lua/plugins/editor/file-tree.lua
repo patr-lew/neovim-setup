@@ -44,10 +44,10 @@ return {
       },
       view = {
         centralize_selection = true,
-        adaptive_size = false,
+        adaptive_size = true,
         side = 'left',
         preserve_window_proportions = true,
-        width = 40,
+        width = 60,
       },
       renderer = {
         full_name = false,
