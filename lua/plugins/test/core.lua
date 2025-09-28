@@ -7,10 +7,26 @@ return {
       -- 'nvim-neotest/neotest-jest',
       'marilari88/neotest-vitest',
       'V13Axel/neotest-pest',
+      'antoinemadec/FixCursorHold.nvim',
+      {
+        'nvim-treesitter/nvim-treesitter', -- Optional, but recommended
+        branch = 'main', -- NOTE; not the master branch!
+        build = function()
+          vim.cmd [[:TSUpdate go]]
+        end,
+      },
+      {
+        'fredrikaverpil/neotest-golang',
+        version = '*', -- Optional, but recommended
+        build = function()
+          vim.system({ 'go', 'install', 'gotest.tools/gotestsum@latest' }):wait() -- Optional, but recommended
+        end,
+      },
     },
     opts = {
       adapters = {
         'neotest-plenary',
+        'neotest-golang',
       },
       status = { virtual_text = true },
       output = { open_on_run = true },

@@ -17,6 +17,7 @@ require('lazy').setup({
     { import = 'plugins.coding.lspconfig' },
     { import = 'plugins.coding.todo-comments' },
     { import = 'plugins.coding.treesitter' },
+    { import = 'plugins.coding.treesitter-plugins.incremental-selection' },
     { import = 'plugins.coding.trouble' },
     { import = 'plugins.dap.core' },
     { import = 'plugins.editor.fzf' },

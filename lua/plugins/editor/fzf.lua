@@ -89,9 +89,13 @@ return {
         '<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>',
         desc = 'Buffers',
       },
-      { '<leader>ff', '<cmd>FzfLua files<cr>', desc = 'Files' },
-      { '<leader><space>', '<cmd>FzfLua files<cr>', desc = 'Find Files' },
-      { '<leader>fg', '<cmd>FzfLua git_files<cr>', desc = 'Git-files' },
+      {
+        '<leader>ff',
+        '<cmd>FzfLua git_files<cr>',
+        desc = 'Files (within git)',
+      },
+      { '<leader><space>', '<cmd>FzfLua git_files<cr>', desc = 'Find Files' },
+      { '<leader>fg', '<cmd>FzfLua files<cr>', desc = 'Files (no-gitignore)' },
 
       -- save (and format first since it's attached as pre-save hook via conform)
       -- hence: [f]ormat and [s]ave
