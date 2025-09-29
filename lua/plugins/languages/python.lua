@@ -115,14 +115,14 @@ return {
       config = function()
         if vim.fn.has 'win32' == 1 then
           require('dap-python').setup(
-            vim.env.MASON
-              .. '/packages/'
-              .. 'debugpy'
-              .. '/venv/Scripts/pythonw.exe'
+            -- vim.env.MASON
+            -- .. '/packages/'
+            -- .. 'debugpy'
+            -- .. '/venv/Scripts/pythonw.exe'
           )
         else
           require('dap-python').setup(
-            vim.env.MASON .. '/packages/' .. 'debugpy' .. '/venv/bin/python'
+            -- vim.env.MASON .. '/packages/' .. 'debugpy' .. '/venv/bin/python'
           )
         end
       end,
