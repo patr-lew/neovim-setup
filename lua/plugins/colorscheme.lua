@@ -24,20 +24,39 @@ return {
   },
 
   -- Your colorscheme plugin
+
   {
     'folke/tokyonight.nvim',
     priority = 1000,
-    config = function()
-      -- load the colorscheme
-      if vim.o.background == 'light' then
-        vim.cmd [[colorscheme tokyonight-day]]
-      else
-        vim.cmd [[colorscheme tokyonight-storm]]
-      end
-    end,
-    setup = {
+    opts = {
+      style = 'storm', -- or night, day, moon
       light_style = 'day',
-      transparent = true,
+      transparent = false,
+      styles = {
+        comments = { italic = true },
+        keywords = { italic = true },
+        functions = { bold = true },
+        variables = {},
+      },
+      config = function(_, opts)
+        require('tokyonight').setup(opts)
+        vim.cmd.colorscheme 'tokyonight'
+
+        -- NOW apply overrides
+        local c = require('tokyonight.colors').setup()
+        local hl = vim.api.nvim_set_hl
+
+        hl(0, '@function', { fg = c.blue, bold = true })
+        hl(0, '@function.call', { fg = c.blue })
+        hl(0, '@method', { fg = c.magenta })
+        hl(0, '@method.call', { fg = c.magenta })
+        hl(0, '@type', { fg = c.cyan })
+        hl(0, '@type.builtin', { fg = c.cyan, italic = true })
+        hl(0, '@constant', { fg = c.yellow })
+        hl(0, '@constant.builtin', { fg = c.orange })
+        hl(0, '@namespace', { fg = c.green })
+        hl(0, '@module', { fg = c.teal })
+      end,
     },
   },
   -- {
