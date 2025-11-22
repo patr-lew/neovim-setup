@@ -26,7 +26,13 @@ return {
     opts = {
       adapters = {
         'neotest-plenary',
-        'neotest-golang',
+        ['neotest-golang'] = {
+          go_test_args = {
+            "-v",
+            "-race",
+            "-count=1",
+          },
+        },
       },
       status = { virtual_text = true },
       output = { open_on_run = true },
