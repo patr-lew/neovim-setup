@@ -16,6 +16,23 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      require('overseer').setup(opts)
+      -- Ensure window navigation works inside Overseer buffers
+      local function map_nav(buf)
+        local opts = { silent = true, noremap = true, buffer = buf }
+        vim.keymap.set('n', '<C-h>', '<C-w>h', opts)
+        vim.keymap.set('n', '<C-j>', '<C-w>j', opts)
+        vim.keymap.set('n', '<C-k>', '<C-w>k', opts)
+        vim.keymap.set('n', '<C-l>', '<C-w>l', opts)
+      end
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = { 'OverseerList', 'OverseerOutput' },
+        callback = function(args)
+          map_nav(args.buf)
+        end,
+      })
+    end,
     keys = {
       {
         '<leader>ot',
@@ -49,10 +66,15 @@ return {
         desc = 'Save Overseer Task Bundle',
       },
       {
+        '<leader>oS',
+        '<cmd>OverseerShell<CR>',
+        desc = 'Run shell in Overseer',
+      },
+      {
         '<leader>ob',
         '<cmd>OverseerLoadBundle<CR>',
         desc = 'Load Overseer Task Bundle',
       },
     },
-  },
+  }
 }
