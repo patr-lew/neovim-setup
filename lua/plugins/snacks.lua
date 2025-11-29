@@ -27,6 +27,27 @@ return {
           o = "open",
           -- Move system open to capital O
           O = "system_open",
+          -- Grep in current directory
+          ["g/"] = {
+            function()
+              local file = Snacks.explorer.state():focused()
+              if file then
+                local dir = file.is_dir and file.path or vim.fn.fnamemodify(file.path, ":h")
+                require("telescope.builtin").live_grep({ cwd = dir })
+              end
+            end,
+            desc = "Grep in directory",
+          },
+          ["gt"] = {
+            function()
+              local file = Snacks.explorer.state():focused()
+              if file then
+                local dir = file.is_dir and file.path or vim.fn.fnamemodify(file.path, ":h")
+                require("neotest").run.run(dir)
+              end
+            end,
+            desc = "Run Neotest in directory",
+          },
         },
       },
     },
