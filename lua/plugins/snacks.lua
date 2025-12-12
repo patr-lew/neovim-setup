@@ -1,5 +1,5 @@
 return {
-  "folke/snacks.nvim",
+  'folke/snacks.nvim',
   opts = {
     dashboard = {
       preset = {
@@ -14,9 +14,9 @@ return {
                                                      ]],
       },
       sections = {
-        { section = "header" },
-        { section = "keys", gap = 1, padding = 1 },
-        { section = "startup" },
+        { section = 'header' },
+        { section = 'keys', gap = 1, padding = 1 },
+        { section = 'startup' },
       },
     },
     explorer = {
@@ -24,29 +24,31 @@ return {
       win = {
         keys = {
           -- Make "o" behave like Enter/l - expand directories and open files
-          o = "open",
+          o = 'open',
           -- Move system open to capital O
-          O = "system_open",
+          O = 'system_open',
           -- Grep in current directory
-          ["g/"] = {
+          ['g/'] = {
             function()
               local file = Snacks.explorer.state():focused()
               if file then
-                local dir = file.is_dir and file.path or vim.fn.fnamemodify(file.path, ":h")
-                require("telescope.builtin").live_grep({ cwd = dir })
+                local dir = file.is_dir and file.path
+                  or vim.fn.fnamemodify(file.path, ':h')
+                require('telescope.builtin').live_grep { cwd = dir }
               end
             end,
-            desc = "Grep in directory",
+            desc = 'Grep in directory',
           },
-          ["gt"] = {
+          ['gt'] = {
             function()
               local file = Snacks.explorer.state():focused()
               if file then
-                local dir = file.is_dir and file.path or vim.fn.fnamemodify(file.path, ":h")
-                require("neotest").run.run(dir)
+                local dir = file.is_dir and file.path
+                  or vim.fn.fnamemodify(file.path, ':h')
+                require('neotest').run.run(dir)
               end
             end,
-            desc = "Run Neotest in directory",
+            desc = 'Run Neotest in directory',
           },
         },
       },
