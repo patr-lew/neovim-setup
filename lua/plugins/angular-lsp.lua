@@ -9,7 +9,7 @@ return {
           '--tsProbeLocations',
           vim.fn.getcwd() .. '/node_modules',
           '--ngProbeLocations',
-          vim.fn.expand '~/.nvm/versions/node/v24.11.1/lib/node_modules/@angular/language-server/node_modules',
+          vim.fn.getcwd() .. '/node_modules',
         },
         on_attach = function(client, bufnr)
           require('lspconfig').common_on_attach(client, bufnr)
