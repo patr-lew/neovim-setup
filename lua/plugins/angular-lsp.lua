@@ -1,34 +1,26 @@
+-- Use LazyVim's global root detection override
+-- This affects ALL LSP servers, not just Angular
 return {
-  'neovim/nvim-lspconfig',
-  opts = {
-    servers = {
-      angularls = {
-        cmd = {
-          'ngserver',
-          '--stdio',
-          '--tsProbeLocations',
-          vim.fn.getcwd() .. '/node_modules',
-          '--ngProbeLocations',
-          vim.fn.getcwd() .. '/node_modules',
-        },
-        on_attach = function(client, bufnr)
-          require('lspconfig').common_on_attach(client, bufnr)
-        end,
-        filetypes = { 'html', 'typescript', 'javascript' },
-        root_dir = require('lspconfig/util').root_pattern '.git',
-        settings = {
-          angular = {},
-        },
-      },
-      vtsls = {
-        root_dir = require('lspconfig/util').root_pattern '.git',
-      },
-      ts_ls = {
-        root_dir = require('lspconfig/util').root_pattern '.git',
-      },
-      eslint = {
-        root_dir = require('lspconfig/util').root_pattern '.git',
-      },
-    },
-  },
+  "neovim/nvim-lspconfig",
+  opts = function()
+    -- Override LazyVim's root detection to prefer .git in Angular projects
+    local root = require("lazyvim.util").root
+    local util = require("lspconfig.util")
+    
+    -- Add a named detector for Angular monorepo
+    root.detectors.angular_monorepo = function(buf)
+      local path = vim.api.nvim_buf_get_name(buf)
+      local git_root = util.root_pattern('.git')(path)
+      
+      -- Only override if we're in an Angular project
+      if git_root and (vim.fn.filereadable(git_root .. '/angular.json') == 1 or vim.fn.filereadable(git_root .. '/nx.json') == 1) then
+        return { git_root }
+      end
+      
+      return {}
+    end
+    
+    -- Prepend our detector to the spec list so it runs first
+    root.spec = vim.list_extend({ "angular_monorepo" }, root.spec or {})
+  end,
 }
