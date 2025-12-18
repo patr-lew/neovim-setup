@@ -4,13 +4,13 @@ return {
     'nvim-neotest/neotest',
     dependencies = {
       'nvim-neotest/nvim-nio',
-'nvim-neotest/neotest-jest',
+      'nvim-neotest/neotest-jest',
       'marilari88/neotest-vitest',
       'V13Axel/neotest-pest',
       'antoinemadec/FixCursorHold.nvim',
       {
         'nvim-treesitter/nvim-treesitter', -- Optional, but recommended
-        branch = 'main', -- NOTE; not the master branch!
+        branch = 'main',
         build = function()
           vim.cmd [[:TSUpdate go]]
         end,
@@ -25,12 +25,11 @@ return {
     },
     opts = {
       adapters = {
-        'neotest-plenary',
         ['neotest-golang'] = {
           go_test_args = {
-            "-v",
-            "-race",
-            "-count=1",
+            '-v',
+            '-race',
+            '-count=1',
           },
         },
       },
@@ -90,35 +89,66 @@ return {
       opts.consumers.overseer = require 'neotest.consumers.overseer'
 
       if opts.adapters then
-        local adapters = {
-          require 'neotest-jest',
-          require 'neotest-vitest',
-          require 'neotest-pest',
-        }
-        for name, config in pairs(opts.adapters or {}) do
-          if type(name) == 'number' then
-            if type(config) == 'string' then
-              config = require(config)
-            end
-            adapters[#adapters + 1] = config
-          elseif config ~= false then
-            local adapter = require(name)
-            if type(config) == 'table' and not vim.tbl_isempty(config) then
-              local meta = getmetatable(adapter)
-              if adapter.setup then
-                adapter.setup(config)
-              elseif adapter.adapter then
-                adapter.adapter(config)
-                adapter = adapter.adapter
-              elseif meta and meta.__call then
-                adapter = adapter(config)
-              else
-                error('Adapter ' .. name .. ' does not support setup')
-              end
-            end
-            adapters[#adapters + 1] = adapter
+        -- Helper function to check if file exists
+        local function file_exists(name)
+          local f = io.open(name, 'r')
+          if f ~= nil then
+            io.close(f)
+            return true
+          end
+          return false
+        end
+
+        local cwd = vim.fn.getcwd()
+        local adapters = {}
+
+        -- Go projects
+        if file_exists(cwd .. '/go.mod') then
+          table.insert(adapters, require('neotest-golang')(opts.adapters['neotest-golang'] or {}))
+        end
+
+        -- JavaScript/TypeScript projects
+        if file_exists(cwd .. '/package.json') then
+          -- Check for Vitest config first
+          if file_exists(cwd .. '/vitest.config.js') or file_exists(cwd .. '/vitest.config.ts') then
+            table.insert(adapters, require 'neotest-vitest')
+          -- Then check for Jest
+          elseif file_exists(cwd .. '/jest.config.js') or file_exists(cwd .. '/jest.config.ts') then
+            table.insert(
+              adapters,
+              require 'neotest-jest' {
+                jestCommand = 'npm test --',
+                jestConfigFile = 'jest.config.js',
+                env = { CI = true },
+                cwd = function()
+                  return vim.fn.getcwd()
+                end,
+              }
+            )
           end
         end
+
+        -- PHP projects
+        if file_exists(cwd .. '/composer.json') then
+          table.insert(adapters, require 'neotest-pest')
+        end
+
+        -- C# projects (check only root directory)
+        local sln_files = vim.fn.glob(cwd .. '/*.sln', false, true)
+        local csproj_files = vim.fn.glob(cwd .. '/*.csproj', false, true)
+        -- Filter out any files found in node_modules
+        local has_sln = #sln_files > 0
+          and not sln_files[1]:match '/node_modules/'
+        local has_csproj = #csproj_files > 0
+          and not csproj_files[1]:match '/node_modules/'
+        if has_sln or has_csproj then
+          table.insert(adapters, require 'neotest-vstest')
+        end
+
+        -- Neovim plugin development (always available for config repo)
+        table.insert(adapters, require 'neotest-plenary')
+
+
         opts.adapters = adapters
       end
 
