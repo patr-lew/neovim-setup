@@ -38,11 +38,11 @@ return {
         functions = { bold = true },
         variables = {},
       },
-      config = function(_, opts)
-        require('tokyonight').setup(opts)
-        vim.cmd.colorscheme 'tokyonight'
+    },
+    config = function(_, opts)
+      require('tokyonight').setup(opts)
 
-        -- NOW apply overrides
+      local function apply_overrides()
         local c = require('tokyonight.colors').setup()
         local hl = vim.api.nvim_set_hl
 
@@ -56,8 +56,37 @@ return {
         hl(0, '@constant.builtin', { fg = c.orange })
         hl(0, '@namespace', { fg = c.green })
         hl(0, '@module', { fg = c.teal })
-      end,
-    },
+
+        -- Invert heading colors globally so render-markdown + treesitter-context match.
+        for level = 1, 6 do
+          local ts_group = string.format('@markup.heading.%d.markdown', level)
+          local ts_hl = vim.api.nvim_get_hl(0, { name = ts_group, link = true })
+          local bg = ts_hl.fg or c.fg
+          local fg = c.bg
+          local attrs = {
+            fg = fg,
+            bg = bg,
+            bold = ts_hl.bold,
+            italic = ts_hl.italic,
+            underline = ts_hl.underline,
+            undercurl = ts_hl.undercurl,
+            strikethrough = ts_hl.strikethrough,
+          }
+          hl(0, ts_group, attrs)
+          hl(0, string.format('RenderMarkdownH%d', level), attrs)
+          hl(0, string.format('RenderMarkdownH%dBg', level), { bg = bg })
+        end
+
+        hl(0, 'RenderMarkdownCodeBorder', { bg = c.bg_highlight })
+      end
+
+      vim.api.nvim_create_autocmd('ColorScheme', {
+        callback = apply_overrides,
+      })
+
+      vim.cmd.colorscheme 'tokyonight'
+      apply_overrides()
+    end,
   },
   -- {
   --   'scottmckendry/cyberdream.nvim',
