@@ -16,9 +16,9 @@ return {
       {
         '<leader>gD',
         function()
-          require('diffview').open { 'HEAD', '--cache' }
+          require('diffview').open { 'HEAD' }
         end,
-        desc = 'Diff uncommitted',
+        desc = 'Diff uncommitted (staged + unstaged)',
       },
       {
         '<leader>gm',
