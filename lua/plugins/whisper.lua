@@ -5,7 +5,7 @@ return {
       require('whisper').setup {
         model = 'base.en',
         auto_download_model = false,
-        keybind = '<C-a>',
+        keybind = '<C-g>',
         manual_trigger_key = '<Enter>',
         step_ms = 5000,
         length_ms = 8000,
@@ -13,7 +13,7 @@ return {
       }
     end,
     keys = {
-      { '<C-a>', mode = { 'n', 'i', 'v' }, desc = 'Toggle speech-to-text' },
+      { '<C-g>', mode = { 'n' }, desc = 'Toggle speech-to-text' },
     },
   },
 }
