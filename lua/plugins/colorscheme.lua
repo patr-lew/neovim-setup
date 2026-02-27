@@ -88,28 +88,4 @@ return {
       apply_overrides()
     end,
   },
-  -- {
-  --   'scottmckendry/cyberdream.nvim',
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     require('cyberdream').setup {
-  --       -- 'auto' will now correctly follow vim.o.background
-  --       variant = 'auto',
-  --       transparent = true,
-  --       italic_comments = true,
-  --       borderless_telescope = false,
-  --     }
-  --     -- Load the colorscheme
-  --     vim.cmd.colorscheme 'cyberdream'
-  --
-  --     -- The keybinding to toggle manually is still useful for testing
-  --     vim.keymap.set(
-  --       'n',
-  --       '<leader>tc',
-  --       ':CyberdreamToggleMode<CR>',
-  --       { noremap = true, silent = true, desc = 'Toggle Colorscheme' }
-  --     )
-  --   end,
-  -- },
 }

@@ -11,16 +11,8 @@ return {
       lsp_keymaps = false, -- Disable go.nvim LSP keymaps, use LazyVim's instead
       -- other options
     },
-    config = function(lp, opts)
+    config = function(_, opts)
       require('go').setup(opts)
-      local format_sync_grp = vim.api.nvim_create_augroup('GoFormat', {})
-      vim.api.nvim_create_autocmd('BufWritePre', {
-        pattern = '*.go',
-        callback = function()
-          require('go.format').goimports()
-        end,
-        group = format_sync_grp,
-      })
     end,
     keys = {
       -- Struct tags
@@ -71,7 +63,6 @@ return {
       },
       { '<leader>cgd', '<cmd>GoDoc<cr>', desc = 'Go doc', ft = 'go' },
     },
-    event = { 'CmdlineEnter' },
     ft = { 'go', 'gomod' },
     build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   },

@@ -9,11 +9,8 @@ return {
       'V13Axel/neotest-pest',
       'antoinemadec/FixCursorHold.nvim',
       {
-        'nvim-treesitter/nvim-treesitter', -- Optional, but recommended
+        'nvim-treesitter/nvim-treesitter',
         branch = 'main',
-        build = function()
-          vim.cmd [[:TSUpdate go]]
-        end,
       },
       {
         'fredrikaverpil/neotest-golang',

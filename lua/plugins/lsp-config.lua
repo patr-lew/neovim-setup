@@ -38,7 +38,7 @@ return {
     -- Prepend our detector to the spec list so it runs first
     root.spec = vim.list_extend({ 'angular_monorepo' }, root.spec or {})
 
-    require('lspconfig').tsserver.setup {
+    require('lspconfig').ts_ls.setup {
       root_dir = monorepo_root,
       single_file_support = false,
     }

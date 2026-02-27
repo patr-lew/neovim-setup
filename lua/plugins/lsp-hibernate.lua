@@ -9,7 +9,6 @@ return {
 
     -- Only hibernate these (tune this list)
     local heavy = {
-      tsserver = true,
       ts_ls = true,
       angularls = true,
       eslint = true,

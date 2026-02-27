@@ -9,7 +9,7 @@ return {
         manual_trigger_key = '<Enter>',
         step_ms = 5000,
         length_ms = 8000,
-        poll_interval_ms = 10001,
+        poll_interval_ms = 1000,
       }
     end,
     keys = {

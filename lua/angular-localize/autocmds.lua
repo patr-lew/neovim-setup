@@ -52,6 +52,9 @@ function M.setup_autocmds(bufnr, opts)
     buffer = bufnr,
     callback = function()
       M.cache[bufnr] = nil
+      -- Clear Treesitter cache on text change
+      local ts = require("angular-localize.treesitter")
+      ts.clear_cache(bufnr)
       M.on_cursor_moved(bufnr, opts)
     end,
   })
@@ -62,6 +65,9 @@ function M.setup_autocmds(bufnr, opts)
     callback = function()
       M.cache[bufnr] = nil
       M.last_line[bufnr] = nil
+      -- Clear Treesitter cache on buffer unload
+      local ts = require("angular-localize.treesitter")
+      ts.clear_cache(bufnr)
       if M.timer then
         M.timer:stop()
         M.timer = nil

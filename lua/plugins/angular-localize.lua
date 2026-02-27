@@ -9,7 +9,8 @@ return {
       filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
       replacement_text = "::",
       highlight_group = "Comment",
-      message_highlight = "String", -- Highlight for message text
+      message_highlight = "String", -- Fallback highlight for message text
+      use_treesitter_highlights = true, -- Use Treesitter for granular syntax highlighting
       debounce_ms = 50,
     },
     config = function(_, opts)

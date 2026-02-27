@@ -8,6 +8,7 @@ M.config = {
   replacement_text = "::",
   highlight_group = "Comment",
   message_highlight = "String",
+  use_treesitter_highlights = true,
   debounce_ms = 50,
 }
 
@@ -41,10 +42,19 @@ function M.setup(opts)
     package.loaded["angular-localize"] = nil
     package.loaded["angular-localize.parser"] = nil
     package.loaded["angular-localize.extmarks"] = nil
+    package.loaded["angular-localize.treesitter"] = nil
     package.loaded["angular-localize.autocmds"] = nil
 
     for bufnr, _ in pairs(M.enabled_buffers) do
       M.disable(bufnr)
+    end
+
+    -- Clear Treesitter cache before reloading
+    local ts_ok, ts = pcall(require, "angular-localize.treesitter")
+    if ts_ok then
+      for bufnr, _ in pairs(M.enabled_buffers) do
+        ts.clear_cache(bufnr)
+      end
     end
 
     require("angular-localize").setup(M.config)
