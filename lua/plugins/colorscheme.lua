@@ -16,7 +16,7 @@ return {
           if mode == 'light' then
             vim.cmd [[colorscheme tokyonight-day]]
           else
-            vim.cmd [[colorscheme tokyonight-storm]]
+            vim.cmd [[colorscheme tokyonight-night]]
           end
         end,
       }
@@ -29,7 +29,7 @@ return {
     'folke/tokyonight.nvim',
     priority = 1000,
     opts = {
-      style = 'storm', -- or night, day, moon
+      style = 'night', -- or night, day, moon
       light_style = 'day',
       transparent = false,
       styles = {
