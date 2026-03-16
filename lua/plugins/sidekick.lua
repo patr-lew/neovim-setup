@@ -1,14 +1,19 @@
 return {
   {
-    "neovim/nvim-lspconfig",
+    'neovim/nvim-lspconfig',
     opts = {
+      cli = {
+        tools = {
+          copilot = { cmd = { 'copilot', '--alt-screen' } },
+        },
+      },
       servers = {
         copilot = { enabled = false },
       },
     },
   },
   {
-    "folke/sidekick.nvim",
+    'folke/sidekick.nvim',
     opts = {
       nes = {
         enabled = false,
@@ -21,8 +26,8 @@ return {
       },
     },
     keys = {
-      { "<leader>uN", false },
-      { "<tab>", false, mode = "n" },
+      { '<leader>uN', false },
+      { '<tab>', false, mode = 'n' },
     },
   },
 }
