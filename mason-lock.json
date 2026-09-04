@@ -1,6 +1,6 @@
 {
   "angular-language-server": "22.1.4",
-  "astro-language-server": "2.16.15",
+  "astro-language-server": "2.16.16",
   "biome": "2.5.11",
   "copilot-language-server": "1.537.0",
   "csharpier": "1.2.6",
@@ -45,7 +45,6 @@
   "tailwindcss-language-server": "0.16.0",
   "taplo": "0.10.0",
   "tree-sitter-cli": "v0.27.0",
-  "tsc": "7.0.2",
   "vtsls": "0.3.0",
   "yaml-language-server": "1.24.0"
 }
