@@ -12,6 +12,7 @@ return {
       json = { 'prettier' },
       yaml = { 'prettier' },
       markdown = { 'prettier' },
+      java = { 'google_java_format' },
     },
   },
 }
